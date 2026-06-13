@@ -63,7 +63,9 @@ FoodCameraApp/
 ```
 [idle]
   ↓ 촬영 버튼 or 갤러리 선택
-[analyzing]  POST /analyze → LoadingOverlay "식재료 인식 중..."
+[analyzing]  POST /analyze → LoadingOverlay 단계 메시지 순환:
+               1. "컴퓨터 비전으로 분석 중..."
+               2. "딥러닝 기반 식재료 분석 중..."
   ↓ 성공
 [ingredients]  식재료 태그 목록 + "레시피 추천받기" 버튼
   ↓ 버튼 탭
