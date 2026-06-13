@@ -25,7 +25,7 @@ def generate_recipe(ingredients: list[str], api_key: str) -> tuple[str, str]:
         raise ValueError("ingredients must not be empty")
 
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.0-flash")
+    model = genai.GenerativeModel("gemini-2.5-flash")
     prompt = _PROMPT_TEMPLATE.format(ingredients=", ".join(ingredients))
     response = model.generate_content(prompt)
     return parse_recipe_text(response.text)
