@@ -13,7 +13,10 @@ async def analyze_image(request: Request, file: UploadFile = File(...)):
     ingredients = run_inference(model, image_bytes)
 
     if ingredients:
-        db = get_client()
-        save_ingredients(db, ingredients)
+        try:
+            db = get_client()
+            save_ingredients(db, ingredients)
+        except Exception as e:
+            print(f"[analyze] failed to save ingredients: {e}")
 
     return AnalyzeResponse(ingredients=ingredients)

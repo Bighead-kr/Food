@@ -11,7 +11,11 @@ def get_client() -> Client:
 
 def save_ingredients(client: Client, ingredients: list[DetectedIngredient]) -> None:
     rows = [{"name": i.name, "confidence": i.confidence} for i in ingredients]
-    client.table("ingredients").insert(rows).execute()
+    client.table("ingredients").upsert(rows, on_conflict="name").execute()
+
+
+def delete_ingredient(client: Client, ingredient_id: str) -> None:
+    client.table("ingredients").delete().eq("id", ingredient_id).execute()
 
 
 def save_recipe(client: Client, ingredients: list[str], title: str, content: str) -> None:
@@ -31,6 +35,14 @@ def get_ingredients(client: Client) -> list[dict]:
         .execute()
     )
     return result.data
+
+
+def clear_all_ingredients(client: Client) -> None:
+    client.table("ingredients").delete().gt("id", "00000000-0000-0000-0000-000000000000").execute()
+
+
+def clear_all_recipes(client: Client) -> None:
+    client.table("recipes").delete().gt("id", "00000000-0000-0000-0000-000000000000").execute()
 
 
 def get_recipes(client: Client) -> list[dict]:

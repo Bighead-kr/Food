@@ -12,7 +12,7 @@ def run_inference(model, image_bytes: bytes) -> list[DetectedIngredient]:
         cls_list = result.boxes.cls.tolist()
         conf_list = result.boxes.conf.tolist()
         for cls_idx, conf in zip(cls_list, conf_list):
-            if conf < 0.5:
+            if conf < 0.35:
                 continue
             name = result.names[int(cls_idx)]
             if name not in best or conf > best[name]:
