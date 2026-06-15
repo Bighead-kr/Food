@@ -13,10 +13,6 @@ RUN pip install --no-cache-dir \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# torch/ultralytics/cv2 설치 후 numpy 2.x로 업그레이드될 수 있으므로 강제 다운그레이드
-# cv2 바이너리는 numpy 1.x ABI(_signature_descriptor)를 요구함
-RUN pip install --no-cache-dir --force-reinstall "numpy==1.26.4"
-
 COPY . .
 
 ENV MODEL_PATH=weights/best.pt
